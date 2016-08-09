@@ -7,9 +7,9 @@
 
     ga('send', {
       hitType: 'event',
-      eventCategory: 'purchase stuff',
-      eventAction: 'buy now',
-      eventLabel: 'store front'
+      eventCategory: 'products',
+      eventAction: 'view details',
+      eventLabel: 'Summer products launch'
     });
 
   });
