@@ -43,9 +43,7 @@ self.addEventListener('push', function(event) {
   };
   event.waitUntil(
     self.registration.showNotification('Hello world!', options)
-  )
-  .then(function() {
-    // Show notification push GA
-  });
+  );
+  // Show notification push GA
 
 });
