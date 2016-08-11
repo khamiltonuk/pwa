@@ -7,6 +7,10 @@
     var notification = event.notification;
     var primaryKey = notification.data.primaryKey;
     console.log('Closed notification:', primaryKey);
+    mainClientPort.postMessage({
+      eventCategory: 'notification',
+      eventAction: 'closed'
+    });
   });
 
   // TODO Step x: Add notification click listener
@@ -20,19 +24,44 @@
     } else if (action === 'open') {
       clients.openWindow('pages/page' + primaryKey + '.html');
       notification.close();
-      console.log('Notification accepted');
+      console.log('Notification opened'); // action?
+      mainClientPort.postMessage({
+        eventCategory: 'notification',
+        eventAction: 'opened'
+      });
     } else {
       clients.openWindow('pages/page' + primaryKey + '.html');
       notification.close();
       console.log('Notification clicked');
+      mainClientPort.postMessage({
+        eventCategory: 'notification',
+        eventAction: 'clicked'
+      });
     }
+  });
+
+  // TODO Step x: Add message listener & establish communication
+  var mainClientPort;
+  self.addEventListener('message', function(event) {
+    console.log('Service worker received message: ', event.data);
+    mainClientPort = event.ports[0];
+    console.log('Communication ports established');
   });
 
   // TODO Step x: Add push listener
   self.addEventListener('push', function(event) {
     console.log('Push recieved');
+    mainClientPort.postMessage({
+      eventCategory: 'push',
+      eventAction: 'recieved'
+    });
+
     if (Notification.permission === 'denied') {
-      console.log('Push notification failed, user has notifications blocked');
+      console.warn('Push notification failed, notifications are blocked');
+      mainClientPort.postMessage({
+        eventCategory: 'push',
+        eventAction: 'blocked'
+      });
       return;
     }
     var options = {
@@ -51,9 +80,14 @@
       ]
     };
     event.waitUntil(
-      self.registration.showNotification('Hello world!', options)
+      Promise.all([
+        self.registration.showNotification('Hello world!', options),
+        mainClientPort.postMessage({
+          eventCategory: 'notification',
+          eventAction: 'displayed-push'
+        })
+      ])
     );
-    console.log('Push notification displayed');
   });
 
 })();
