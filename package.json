@@ -1,0 +1,22 @@
+{
+  "name": "google-analytics-lab",
+  "version": "1.0.0",
+  "description": "",
+  "main": "service-worker.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DavidScales/google-analytics-lab.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DavidScales/google-analytics-lab/issues"
+  },
+  "homepage": "https://github.com/DavidScales/google-analytics-lab#readme",
+  "devDependencies": {
+    "sw-offline-google-analytics": "^1.0.1"
+  }
+}

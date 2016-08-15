@@ -101,7 +101,6 @@
   }
 
   // TODO Step 9b: Add push notification
-
   var subscription;
   var isSubscribed = false;
   var subscribeButton = document.getElementById('subscribe');
@@ -120,7 +119,7 @@
       subscription = pushSubscription;
       console.log('Subscribed!', subscription);
       // TODO Step 9d: send push subscribed event
-      // ga('send', 'event', 'push', 'subscribe');
+      ga('send', 'event', 'push', 'subscribe');
       subscribeButton.textContent = 'Unsubscribe';
       isSubscribed = true;
     })
@@ -128,11 +127,11 @@
       if (Notification.permission === 'denied') {
         console.warn('Subscribe failed, notifications are blocked');
         // TODO Step 9e: send push blocked event
-        // ga('send', 'event', 'push', 'subscribe-blocked');
+        ga('send', 'event', 'push', 'subscribe-blocked');
       } else {
         console.log('Error subscribing', error);
         // TODO Step 9f: send push subscribe-error event
-        // ga('send', 'event', 'push', 'subscribe-error');
+        ga('send', 'event', 'push', 'subscribe-error');
       }
     });
   }
@@ -142,14 +141,14 @@
     .then(function() {
       console.log('Unsubscribed!');
       // TODO Step 9g: send push unsubscibe event
-      // ga('send', 'event', 'push', 'unsubscribe');
+      ga('send', 'event', 'push', 'unsubscribe');
       subscribeButton.textContent = 'Subscribe';
       isSubscribed = false;
     })
     .catch(function(error) {
       console.log('Error unsubscribing', error);
       // TODO Step 9h: send push unsubscribe-error event
-      // ga('send', 'event', 'push', 'unsubscribe-error');
+      ga('send', 'event', 'push', 'unsubscribe-error');
       subscribeButton.textContent = 'Subscribe';
     });
   }

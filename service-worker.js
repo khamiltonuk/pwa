@@ -1,3 +1,7 @@
+// TODO Step 10: Add offline analytics
+importScripts('/node_modules/sw-offline-google-analytics/offline-google-analytics-import.js');
+goog.offlineGoogleAnalytics.initialize();
+
 (function() {
   'use strict';
 
@@ -55,17 +59,17 @@
   self.addEventListener('push', function(event) {
     console.log('Push recieved');
     // TODO Step 9i: Send push received event
-    // mainClientPort.postMessage({
-    //   eventCategory: 'push',
-    //   eventAction: 'recieved'
-    // });
+    mainClientPort.postMessage({
+      eventCategory: 'push',
+      eventAction: 'recieved'
+    });
     if (Notification.permission === 'denied') {
       console.warn('Push notification failed, notifications are blocked');
       // TODO Step 9j: Send push blocked event
-      // mainClientPort.postMessage({
-      //   eventCategory: 'push',
-      //   eventAction: 'blocked'
-      // });
+      mainClientPort.postMessage({
+        eventCategory: 'push',
+        eventAction: 'blocked'
+      });
       return;
     }
     var options = {
@@ -87,10 +91,10 @@
       Promise.all([
         self.registration.showNotification('Hello world!', options),
         // TODO Step 9k: Send notification displayed-push event
-        // mainClientPort.postMessage({
-        //   eventCategory: 'notification',
-        //   eventAction: 'displayed-push'
-        // })
+        mainClientPort.postMessage({
+          eventCategory: 'notification',
+          eventAction: 'displayed-push'
+        })
       ])
     );
   });
