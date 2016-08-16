@@ -1,7 +1,7 @@
-// TODO Step 10: Add offline analytics
-
 (function() {
   'use strict';
+
+  // TODO Step 10: Add offline analytics
 
   // TODO Step 8g: Add notification close listener
 
