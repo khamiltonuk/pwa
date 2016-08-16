@@ -80,6 +80,51 @@
     ga('send', 'event', eventCategory, eventAction);
   }
 
-  // TODO Step 9b: Add push notification
+  var subscription;
+  var isSubscribed = false;
+  var subscribeButton = document.getElementById('subscribe');
+
+  subscribeButton.addEventListener('click', function() {
+    if (isSubscribed) {
+      unsubscribe();
+    } else {
+      subscribe();
+    }
+  });
+
+  function subscribe() {
+    registration.pushManager.subscribe({userVisibleOnly: true})
+    .then(function(pushSubscription) {
+      subscription = pushSubscription;
+      console.log('Subscribed!', subscription);
+      ga('send', 'event', 'push', 'subscribe');
+      subscribeButton.textContent = 'Unsubscribe';
+      isSubscribed = true;
+    })
+    .catch(function(error) {
+      if (Notification.permission === 'denied') {
+        console.warn('Subscribe failed, notifications are blocked');
+        ga('send', 'event', 'push', 'subscribe-blocked');
+      } else {
+        console.warn('Error subscribing', error);
+        ga('send', 'event', 'push', 'subscribe-error');
+      }
+    });
+  }
+
+  function unsubscribe() {
+    subscription.unsubscribe()
+    .then(function() {
+      console.log('Unsubscribed!');
+      ga('send', 'event', 'push', 'unsubscribe');
+      subscribeButton.textContent = 'Subscribe';
+      isSubscribed = false;
+    })
+    .catch(function(error) {
+      console.warn('Error unsubscribing', error);
+      ga('send', 'event', 'push', 'unsubscribe-error');
+      subscribeButton.textContent = 'Subscribe';
+    });
+  }
 
 })();
