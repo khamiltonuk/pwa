@@ -21,7 +21,7 @@
   var registration; // Store service worker registration
   navigator.serviceWorker.register('service-worker.js')
   .then(function(reg) {
-    console.log('Service worker registered', reg);
+    console.log('Service worker registered!', reg);
     registration = reg;
   })
   .catch(function(error) {

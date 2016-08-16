@@ -1,11 +1,10 @@
-importScripts(
-  '/node_modules/sw-offline-google-analytics/offline-google-analytics-import.js'
-);
-goog.offlineGoogleAnalytics.initialize();
-console.log('new');
-
 (function() {
   'use strict';
+
+  importScripts(
+  'node_modules/sw-offline-google-analytics/offline-google-analytics-import.js'
+  );
+  goog.offlineGoogleAnalytics.initialize();
 
   self.addEventListener('notificationclose', function(event) {
     var notification = event.notification;
