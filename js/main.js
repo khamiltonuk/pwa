@@ -127,4 +127,16 @@
     });
   }
 
+  var link = document.getElementById('external');
+  link.addEventListener('click', function(event) {
+    event.preventDefault();
+    function navigate() {
+      window.location.href = event.target.href;
+    }
+    setTimeout(navigate, 1000);
+    ga('send', 'event', 'outbound', 'sponsor1', {
+      hitCallback: navigate
+    });
+  });
+
 })();
