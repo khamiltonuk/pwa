@@ -3,13 +3,13 @@
 
   if (!('Notification' in window)) {
     console.log('This browser does not support notifications!');
-    // TODO Optional step 8g: Send notification unsupported event
+    // TODO Optional step 8x: Send notification unsupported event
     return;
   }
 
   if (!('serviceWorker' in navigator)) {
     console.log('This browser does not support service worker');
-    // TODO Optional step 8h: Send service worker unsupported event
+    // TODO Optional step 8y: Send service worker unsupported event
     return;
   }
 
